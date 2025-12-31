@@ -1,33 +1,34 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
-import { View } from '../types';
 
-export const PublicLayout = ({ children, setView }: { children?: React.ReactNode, setView: (v: View) => void }) => {
+export const PublicLayout = ({ children }: { children?: React.ReactNode }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-white text-zinc-900 font-sans selection:bg-zinc-900 selection:text-white">
       <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-zinc-100">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => setView('home')}>
+          <Link to="/" className="flex items-center gap-2 cursor-pointer">
             <div className="w-8 h-8 bg-zinc-900 rounded-lg flex items-center justify-center">
               <span className="text-white font-serif font-bold text-xl">H</span>
             </div>
             <span className="font-semibold tracking-tight text-lg">HandyWriterz</span>
-          </div>
+          </Link>
           
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-500">
-            <a href="#" className="hover:text-zinc-900 transition-colors">Services</a>
-            <a href="#" className="hover:text-zinc-900 transition-colors">How it Works</a>
-            <a href="#" className="hover:text-zinc-900 transition-colors">Pricing</a>
-            <a href="#" onClick={() => setView('article')} className="hover:text-zinc-900 transition-colors">Blog</a>
+            <Link to="/services" className="hover:text-zinc-900 transition-colors">Services</Link>
+            <Link to="/how-it-works" className="hover:text-zinc-900 transition-colors">How it Works</Link>
+            <Link to="/pricing" className="hover:text-zinc-900 transition-colors">Pricing</Link>
+            <Link to="/blog" className="hover:text-zinc-900 transition-colors">Blog</Link>
           </nav>
 
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" size="sm" onClick={() => setView('portal-dashboard')}>Log in</Button>
-            <Button size="sm" onClick={() => setView('portal-dashboard')}>Get Started</Button>
+            <Button variant="ghost" size="sm" onClick={() => navigate('/app')}>Log in</Button>
+            <Button size="sm" onClick={() => navigate('/app')}>Get Started</Button>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -39,12 +40,12 @@ export const PublicLayout = ({ children, setView }: { children?: React.ReactNode
         {/* Mobile Menu Overlay */}
         {isMobileMenuOpen && (
           <div className="md:hidden absolute top-16 left-0 w-full bg-white border-b border-zinc-100 p-4 shadow-xl flex flex-col gap-4 animate-in slide-in-from-top-2">
-            <a href="#" className="text-sm font-medium p-2 hover:bg-zinc-50 rounded-lg">Services</a>
-            <a href="#" className="text-sm font-medium p-2 hover:bg-zinc-50 rounded-lg">How it Works</a>
-            <a href="#" className="text-sm font-medium p-2 hover:bg-zinc-50 rounded-lg">Pricing</a>
+            <Link to="/services" className="text-sm font-medium p-2 hover:bg-zinc-50 rounded-lg">Services</Link>
+            <Link to="/how-it-works" className="text-sm font-medium p-2 hover:bg-zinc-50 rounded-lg">How it Works</Link>
+            <Link to="/pricing" className="text-sm font-medium p-2 hover:bg-zinc-50 rounded-lg">Pricing</Link>
             <Button className="w-full justify-center" onClick={() => {
                 setIsMobileMenuOpen(false);
-                setView('portal-dashboard');
+                navigate('/app');
             }}>Log In</Button>
           </div>
         )}

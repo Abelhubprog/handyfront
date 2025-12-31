@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { Search, Settings, Briefcase } from 'lucide-react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Badge } from '../components/ui/Badge';
 import { OrderWorkspace } from '../components/orders/OrderWorkspace';
 import { cn } from '../lib/utils';
-import { View, Order } from '../types';
+import { useOrders } from '../contexts/OrderContext';
 
-export const AdminInbox = ({ setView, currentOrderId, setCurrentOrderId, orders, onUpdateOrder }: { setView: (v: View) => void, currentOrderId: string | null, setCurrentOrderId: (id: string) => void, orders: Order[], onUpdateOrder: (o: Order) => void }) => {
+export const AdminInbox = () => {
   const [filter, setFilter] = useState<'all' | 'attention' | 'active'>('all');
+  const navigate = useNavigate();
+  const { id: currentOrderId } = useParams();
+  const { orders } = useOrders();
   
   const filteredOrders = orders.filter(o => {
       if (filter === 'attention') return o.status === 'review' || o.status === 'pending_payment';
@@ -14,13 +18,12 @@ export const AdminInbox = ({ setView, currentOrderId, setCurrentOrderId, orders,
       return true;
   });
 
-  // Prioritize current selection if it exists in the filtered list, otherwise default to top of list
-  const activeOrder = filteredOrders.find(o => o.id === currentOrderId) || filteredOrders[0] || null;
+  const activeOrder = filteredOrders.find(o => o.id === currentOrderId) || null;
   
   return (
     <div className="flex flex-1 overflow-hidden h-full">
         {/* Left List */}
-        <div className="w-full md:w-[400px] border-r border-zinc-200 bg-white flex flex-col h-full">
+        <div className={cn("w-full md:w-[400px] border-r border-zinc-200 bg-white flex-col h-full", activeOrder ? "hidden md:flex" : "flex")}>
             <div className="p-4 border-b border-zinc-100">
                 <div className="flex items-center justify-between mb-4">
                     <h2 className="font-semibold text-zinc-900">Inbox</h2>
@@ -53,7 +56,7 @@ export const AdminInbox = ({ setView, currentOrderId, setCurrentOrderId, orders,
                     filteredOrders.map(order => (
                         <div 
                             key={order.id}
-                            onClick={() => setCurrentOrderId(order.id)}
+                            onClick={() => navigate(`/admin/orders/${order.id}`)}
                             className={cn(
                                 "p-4 border-b border-zinc-100 cursor-pointer hover:bg-zinc-50 transition-colors group",
                                 activeOrder?.id === order.id ? 'bg-zinc-50 border-l-4 border-l-zinc-900' : 'border-l-4 border-l-transparent'
@@ -77,14 +80,23 @@ export const AdminInbox = ({ setView, currentOrderId, setCurrentOrderId, orders,
         </div>
         
         {/* Right Details */}
-        <div className="hidden md:block flex-1 h-full overflow-hidden bg-white">
+        <div className={cn("flex-1 h-full overflow-hidden bg-white", activeOrder ? "block" : "hidden md:block")}>
             {activeOrder ? (
-                <OrderWorkspace 
-                    key={activeOrder.id} // Forces reset of tabs when switching orders
-                    order={activeOrder} 
-                    userType="admin" 
-                    onPayment={() => {}} // Admin doesn't pay
-                />
+                <div className="h-full flex flex-col">
+                    <div className="md:hidden p-4 border-b border-zinc-100 flex items-center gap-2">
+                        <button onClick={() => navigate('/admin')} className="text-zinc-500">
+                             Back
+                        </button>
+                    </div>
+                    <div className="flex-1 overflow-hidden">
+                         <OrderWorkspace 
+                            key={activeOrder.id} 
+                            order={activeOrder} 
+                            userType="admin" 
+                            onPayment={() => {}} 
+                        />
+                    </div>
+                </div>
             ) : (
                 <div className="h-full flex flex-col items-center justify-center text-zinc-400 gap-3">
                     <div className="w-16 h-16 bg-zinc-50 rounded-2xl flex items-center justify-center">

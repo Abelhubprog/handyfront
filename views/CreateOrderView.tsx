@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { ArrowRight, Calculator } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
-import { View, Order } from '../types';
+import { Order } from '../types';
+import { useOrders } from '../contexts/OrderContext';
 
-export const CreateOrderView = ({ setView, onSubmit }: { setView: (v: View) => void, onSubmit: (order: Order) => void }) => {
-    const [step, setStep] = useState(1);
+export const CreateOrderView = () => {
+    const navigate = useNavigate();
+    const { addOrder } = useOrders();
     const [formData, setFormData] = useState({
         service: 'Essay Writing',
         type: 'Undergraduate',
@@ -33,12 +36,13 @@ export const CreateOrderView = ({ setView, onSubmit }: { setView: (v: View) => v
                 { id: Date.now().toString(), type: 'status', title: 'Order Drafted', timestamp: 'Just now' }
             ]
         };
-        onSubmit(newOrder);
+        addOrder(newOrder);
+        navigate(`/app/orders/${newOrder.id}`);
     };
 
     return (
         <div className="max-w-3xl mx-auto p-6 md:p-12">
-            <Button variant="ghost" className="mb-6 pl-0" onClick={() => setView('portal-dashboard')}>
+            <Button variant="ghost" className="mb-6 pl-0" onClick={() => navigate('/app')}>
                 <ArrowRight className="rotate-180 mr-2" size={16} /> Back to Dashboard
             </Button>
             
