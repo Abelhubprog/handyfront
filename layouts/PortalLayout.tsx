@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutDashboard, FileText, MessageSquare, Settings, User, LogOut, Search, Plus } from 'lucide-react';
+import { LayoutDashboard, FileText, MessageSquare, Settings, User, LogOut, Search, Plus, FolderOpen } from 'lucide-react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { cn } from '../lib/utils';
@@ -15,7 +15,7 @@ export const PortalLayout = ({ children }: { children?: React.ReactNode }) => {
 
   const getMobileLinkClass = ({ isActive }: { isActive: boolean }) => 
     cn(
-      "flex flex-col items-center gap-1 p-2 rounded-lg",
+      "flex flex-col items-center gap-1 p-2 rounded-lg min-w-[3rem]",
       isActive ? "text-zinc-900" : "text-zinc-400"
     );
 
@@ -35,7 +35,6 @@ export const PortalLayout = ({ children }: { children?: React.ReactNode }) => {
             <LayoutDashboard size={18} />
             Dashboard
           </NavLink>
-          {/* Note: We map /app/orders and specific orders to the 'My Orders' tab roughly */}
           <NavLink to="/app/orders" className={({isActive}) => cn("inline-flex items-center justify-center rounded-lg font-medium transition-colors h-10 px-4 py-2 text-sm", getLinkClass({isActive}))}>
             <FileText size={18} />
             My Orders
@@ -44,6 +43,10 @@ export const PortalLayout = ({ children }: { children?: React.ReactNode }) => {
             <MessageSquare size={18} />
             Messages
             <span className="ml-auto bg-blue-100 text-blue-700 text-[10px] px-1.5 py-0.5 rounded-full font-bold">2</span>
+          </NavLink>
+          <NavLink to="/app/uploads" className={({isActive}) => cn("inline-flex items-center justify-center rounded-lg font-medium transition-colors h-10 px-4 py-2 text-sm", getLinkClass({isActive}))}>
+            <FolderOpen size={18} />
+            Vault
           </NavLink>
           <NavLink to="/app/settings" className={({isActive}) => cn("inline-flex items-center justify-center rounded-lg font-medium transition-colors h-10 px-4 py-2 text-sm", getLinkClass({isActive}))}>
             <Settings size={18} />
@@ -73,28 +76,28 @@ export const PortalLayout = ({ children }: { children?: React.ReactNode }) => {
       </main>
 
       {/* Mobile Tab Bar */}
-      <nav className="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-zinc-200 flex items-center justify-around h-16 z-50 px-2 pb-safe">
+      <nav className="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-zinc-200 flex items-center justify-between h-16 z-50 px-2 pb-safe">
         <NavLink to="/app" end className={getMobileLinkClass}>
           <LayoutDashboard size={20} />
           <span className="text-[10px] font-medium">Home</span>
         </NavLink>
-        <NavLink to="/app/explore" className={getMobileLinkClass}>
-          <Search size={20} />
-          <span className="text-[10px] font-medium">Explore</span>
+        <NavLink to="/app/orders" className={getMobileLinkClass}>
+          <FileText size={20} />
+          <span className="text-[10px] font-medium">Orders</span>
         </NavLink>
         <button 
-          className="flex -mt-8 bg-zinc-900 text-white rounded-full p-4 shadow-lg shadow-zinc-900/20 active:scale-95 transition-transform"
+          className="flex -mt-8 bg-zinc-900 text-white rounded-full p-3.5 shadow-lg shadow-zinc-900/20 active:scale-95 transition-transform"
           onClick={() => navigate('/app/new')}
         >
           <Plus size={24} />
         </button>
+        <NavLink to="/app/uploads" className={getMobileLinkClass}>
+          <FolderOpen size={20} />
+          <span className="text-[10px] font-medium">Vault</span>
+        </NavLink>
         <NavLink to="/app/messages" className={getMobileLinkClass}>
           <MessageSquare size={20} />
           <span className="text-[10px] font-medium">Chat</span>
-        </NavLink>
-        <NavLink to="/app/profile" className={getMobileLinkClass}>
-          <User size={20} />
-          <span className="text-[10px] font-medium">Profile</span>
         </NavLink>
       </nav>
     </div>

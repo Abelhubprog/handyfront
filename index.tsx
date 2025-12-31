@@ -13,6 +13,8 @@ import { CreateOrderView } from './views/CreateOrderView';
 import { PortalOrderView } from './views/PortalOrderView';
 import { AdminInbox } from './views/AdminInbox';
 import { ArticleView } from './views/ArticleView';
+import { MessagesView } from './views/MessagesView';
+import { UploadsView } from './views/UploadsView';
 
 const App = () => {
   return (
@@ -31,9 +33,10 @@ const App = () => {
           <Route path="/app" element={<PortalLayout><UserDashboard /></PortalLayout>} />
           <Route path="/app/new" element={<PortalLayout><CreateOrderView /></PortalLayout>} />
           <Route path="/app/orders/:id" element={<PortalLayout><PortalOrderView /></PortalLayout>} />
-          {/* Placeholder routes for now */}
           <Route path="/app/orders" element={<PortalLayout><UserDashboard /></PortalLayout>} />
-          <Route path="/app/messages" element={<PortalLayout><UserDashboard /></PortalLayout>} />
+          <Route path="/app/messages" element={<PortalLayout><MessagesView /></PortalLayout>} />
+          <Route path="/app/uploads" element={<PortalLayout><UploadsView /></PortalLayout>} />
+          {/* Placeholder routes for now */}
           <Route path="/app/settings" element={<PortalLayout><UserDashboard /></PortalLayout>} />
 
           {/* Admin Routes */}
