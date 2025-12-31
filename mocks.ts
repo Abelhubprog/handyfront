@@ -1,4 +1,12 @@
-import { Order } from './types';
+
+import { Order, User } from './types';
+
+export const MOCK_USERS: User[] = [
+    { id: 'u1', name: 'Alex Student', email: 'alex@uni.edu', role: 'user' },
+    { id: 'a1', name: 'Admin Sarah', email: 'sarah@handywriterz.com', role: 'admin' },
+    { id: 'w1', name: 'Writer Mike', email: 'mike@handywriterz.com', role: 'writer' },
+    { id: 's1', name: 'Support Jay', email: 'jay@handywriterz.com', role: 'support' },
+];
 
 export const INITIAL_ORDERS: Order[] = [
   {
