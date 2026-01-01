@@ -27,11 +27,11 @@ export const NextActionBanner = ({ type, title, description, ctaLabel, onCta, cl
     
     // Tone mapping
     const tones = {
-        pay: "bg-warning/10 border-warning/20 text-warning-900",
-        upload: "bg-info/10 border-info/20 text-info-900",
-        download: "bg-success/10 border-success/20 text-success-900",
-        reply: "bg-surface2 border-border text-text",
-        none: "bg-surface2"
+        pay: "bg-amber-50 border-amber-100 text-amber-900",
+        upload: "bg-blue-50 border-blue-100 text-blue-900",
+        download: "bg-emerald-50 border-emerald-100 text-emerald-900",
+        reply: "bg-zinc-50 border-zinc-100 text-zinc-900",
+        none: "bg-zinc-50"
     };
     
     return (
@@ -48,7 +48,7 @@ export const NextActionBanner = ({ type, title, description, ctaLabel, onCta, cl
             <Button 
                 size="sm" 
                 onClick={(e) => { e.stopPropagation(); onCta(); }}
-                className={cn("shrink-0 ml-4", type === 'pay' ? "bg-warning text-white hover:bg-yellow-600" : "")}
+                className={cn("shrink-0 ml-4", type === 'pay' ? "bg-amber-500 text-white hover:bg-amber-600 border-transparent shadow-none" : "bg-white border-black/5 hover:bg-white/80 text-black")}
             >
                 {ctaLabel}
             </Button>
