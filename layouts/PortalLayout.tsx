@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { LayoutDashboard, FileText, MessageSquare, Settings, User as UserIcon, LogOut, Search, Plus, FolderOpen } from 'lucide-react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
@@ -9,10 +8,22 @@ import { useAuth } from '../contexts/AuthContext';
 
 export const PortalLayout = ({ children }: { children?: React.ReactNode }) => {
   const navigate = useNavigate();
-  // We use try-catch or optional chaining in case this layout is rendered before Context is ready (though it shouldn't be)
-  // But safer to assume Context is available if wrapped correctly in index.tsx
   const { totalUnreadCount } = useMessages(); 
-  const { user } = useAuth();
+  const { user, logout, isLoading } = useAuth();
+
+  // Route Protection
+  useEffect(() => {
+    if (!isLoading && !user) {
+        navigate('/sign-in');
+    }
+  }, [user, isLoading, navigate]);
+
+  if (isLoading || !user) return null;
+
+  const handleLogout = () => {
+      logout();
+      navigate('/sign-in');
+  };
 
   const getLinkClass = ({ isActive }: { isActive: boolean }) => 
     cn(
@@ -71,10 +82,10 @@ export const PortalLayout = ({ children }: { children?: React.ReactNode }) => {
               <UserIcon size={16} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-zinc-900 truncate">{user?.name || 'Guest User'}</p>
-              <p className="text-xs text-zinc-500 truncate">{user?.email || 'guest@handywriterz.com'}</p>
+              <p className="text-sm font-medium text-zinc-900 truncate">{user?.name}</p>
+              <p className="text-xs text-zinc-500 truncate">{user?.email}</p>
             </div>
-            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-zinc-400" onClick={() => navigate('/')}>
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-zinc-400" onClick={handleLogout}>
               <LogOut size={16} />
             </Button>
           </div>
