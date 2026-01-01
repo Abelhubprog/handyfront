@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Briefcase, User, CreditCard, LogOut } from 'lucide-react';
+import { Briefcase, User, CreditCard, LogOut, PenTool } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { cn } from '../lib/utils';
@@ -11,6 +10,7 @@ export const AdminLayout = ({ children }: { children?: React.ReactNode }) => {
   // Define visibility rules
   const canViewUsers = ['admin', 'support'].includes(user?.role || '');
   const canViewFinance = ['admin'].includes(user?.role || '');
+  const canPublish = ['admin', 'editor'].includes(user?.role || '');
 
   return (
     <div className="h-screen bg-zinc-50 flex overflow-hidden">
@@ -39,6 +39,17 @@ export const AdminLayout = ({ children }: { children?: React.ReactNode }) => {
                 >
                     <User size={20} />
                     <span className="absolute left-14 bg-zinc-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Users</span>
+                </Link>
+            )}
+
+            {canPublish && (
+                <Link 
+                    to="/admin/publishing" 
+                    className="p-3 text-zinc-500 hover:text-white hover:bg-zinc-800 rounded-xl transition-colors group relative" 
+                    title="Publishing"
+                >
+                    <PenTool size={20} />
+                    <span className="absolute left-14 bg-zinc-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Publishing</span>
                 </Link>
             )}
 

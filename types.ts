@@ -2,13 +2,23 @@
 export type OrderStatus = 'draft' | 'pending_payment' | 'in_progress' | 'review' | 'delivered';
 export type View = 'home' | 'portal-dashboard' | 'create-order' | 'portal-order' | 'admin-inbox' | 'article';
 export type UserRole = 'user' | 'admin' | 'writer' | 'support';
+export type UserStatus = 'active' | 'suspended' | 'pending';
 
 export interface User {
   id: string;
   name: string;
   email: string;
   role: UserRole;
+  status: UserStatus;
   avatar?: string;
+  joinedAt: string;
+  lastActive: string;
+  stats?: {
+    totalOrders: number;
+    totalSpent: number; // for users
+    totalEarned: number; // for writers
+    rating: number;
+  };
 }
 
 export interface Activity {
@@ -30,4 +40,6 @@ export interface Order {
   nextAction: 'pay' | 'upload' | 'review' | 'download' | 'none';
   activities: Activity[];
   adminNotes?: string;
+  userId?: string; // Owner
+  writerId?: string; // Assigned writer
 }

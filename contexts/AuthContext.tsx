@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { User, UserRole } from '../types';
 import { MOCK_USERS } from '../mocks';
@@ -12,7 +11,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   // Default to Admin for development
   const [user, setUser] = useState<User | null>(MOCK_USERS.find(u => u.role === 'admin') || null);
 

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
@@ -6,6 +5,7 @@ import { OrderProvider } from './contexts/OrderContext';
 import { MessageProvider } from './contexts/MessageContext';
 import { VaultProvider } from './contexts/VaultContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { PublishingProvider } from './contexts/PublishingContext';
 
 import { PublicLayout } from './layouts/PublicLayout';
 import { PortalLayout } from './layouts/PortalLayout';
@@ -16,10 +16,14 @@ import { UserDashboard } from './views/UserDashboard';
 import { CreateOrderView } from './views/CreateOrderView';
 import { PortalOrderView } from './views/PortalOrderView';
 import { AdminInbox } from './views/AdminInbox';
+import { AdminPublishingView } from './views/AdminPublishingView';
+import { AdminUsersView } from './views/AdminUsersView';
+import { UserProfileView } from './views/UserProfileView';
 import { ArticleView } from './views/ArticleView';
 import { MessagesView } from './views/MessagesView';
 import { UploadsView } from './views/UploadsView';
 import { OrdersListView } from './views/OrdersListView';
+import { AuthView } from './views/AuthView';
 import { UserRole } from './types';
 
 const DevTools = () => {
@@ -34,6 +38,8 @@ const DevTools = () => {
                 <a href="#/app" className="hover:text-blue-300">User</a>
                 <span>|</span>
                 <a href="#/admin" className="hover:text-blue-300">Admin</a>
+                 <span>|</span>
+                <a href="#/sign-in" className="hover:text-blue-300">Auth</a>
             </div>
             
             <div className="bg-zinc-900/90 backdrop-blur text-white text-xs p-2 rounded-lg flex gap-2 items-center">
@@ -57,38 +63,45 @@ const App = () => {
     <OrderProvider>
       <MessageProvider>
         <VaultProvider>
-            <AuthProvider>
-              <HashRouter>
-                <Routes>
-                  {/* Public Routes */}
-                  <Route path="/" element={<PublicLayout><HomePage /></PublicLayout>} />
-                  <Route path="/services" element={<PublicLayout><HomePage /></PublicLayout>} />
-                  <Route path="/how-it-works" element={<PublicLayout><HomePage /></PublicLayout>} />
-                  <Route path="/pricing" element={<PublicLayout><HomePage /></PublicLayout>} />
-                  <Route path="/blog" element={<PublicLayout><ArticleView /></PublicLayout>} />
-                  <Route path="/article" element={<PublicLayout><ArticleView /></PublicLayout>} />
+            <PublishingProvider>
+                <AuthProvider>
+                  <HashRouter>
+                    <Routes>
+                      {/* Public Routes */}
+                      <Route path="/" element={<PublicLayout><HomePage /></PublicLayout>} />
+                      <Route path="/services" element={<PublicLayout><HomePage /></PublicLayout>} />
+                      <Route path="/how-it-works" element={<PublicLayout><HomePage /></PublicLayout>} />
+                      <Route path="/pricing" element={<PublicLayout><HomePage /></PublicLayout>} />
+                      <Route path="/blog" element={<PublicLayout><ArticleView /></PublicLayout>} />
+                      <Route path="/article" element={<PublicLayout><ArticleView /></PublicLayout>} />
 
-                  {/* User Portal Routes */}
-                  <Route path="/app" element={<PortalLayout><UserDashboard /></PortalLayout>} />
-                  <Route path="/app/new" element={<PortalLayout><CreateOrderView /></PortalLayout>} />
-                  <Route path="/app/orders/:id" element={<PortalLayout><PortalOrderView /></PortalLayout>} />
-                  <Route path="/app/orders" element={<PortalLayout><OrdersListView /></PortalLayout>} />
-                  <Route path="/app/messages" element={<PortalLayout><MessagesView /></PortalLayout>} />
-                  <Route path="/app/uploads" element={<PortalLayout><UploadsView /></PortalLayout>} />
-                  {/* Placeholder routes for now */}
-                  <Route path="/app/settings" element={<PortalLayout><UserDashboard /></PortalLayout>} />
+                      {/* Auth Routes */}
+                      <Route path="/sign-in" element={<AuthView mode="sign-in" />} />
+                      <Route path="/sign-up" element={<AuthView mode="sign-up" />} />
 
-                  {/* Admin Routes */}
-                  <Route path="/admin" element={<AdminLayout><AdminInbox /></AdminLayout>} />
-                  <Route path="/admin/orders/:id" element={<AdminLayout><AdminInbox /></AdminLayout>} />
-                  <Route path="/admin/users" element={<AdminLayout><AdminInbox /></AdminLayout>} />
-                  <Route path="/admin/payments" element={<AdminLayout><AdminInbox /></AdminLayout>} />
-                  
-                </Routes>
+                      {/* User Portal Routes */}
+                      <Route path="/app" element={<PortalLayout><UserDashboard /></PortalLayout>} />
+                      <Route path="/app/new" element={<PortalLayout><CreateOrderView /></PortalLayout>} />
+                      <Route path="/app/orders/:id" element={<PortalLayout><PortalOrderView /></PortalLayout>} />
+                      <Route path="/app/orders" element={<PortalLayout><OrdersListView /></PortalLayout>} />
+                      <Route path="/app/messages" element={<PortalLayout><MessagesView /></PortalLayout>} />
+                      <Route path="/app/uploads" element={<PortalLayout><UploadsView /></PortalLayout>} />
+                      <Route path="/app/settings" element={<PortalLayout><UserDashboard /></PortalLayout>} />
 
-                <DevTools />
-              </HashRouter>
-          </AuthProvider>
+                      {/* Admin Routes */}
+                      <Route path="/admin" element={<AdminLayout><AdminInbox /></AdminLayout>} />
+                      <Route path="/admin/orders/:id" element={<AdminLayout><AdminInbox /></AdminLayout>} />
+                      <Route path="/admin/users" element={<AdminLayout><AdminUsersView /></AdminLayout>} />
+                      <Route path="/admin/users/:id" element={<AdminLayout><UserProfileView /></AdminLayout>} />
+                      <Route path="/admin/publishing" element={<AdminLayout><AdminPublishingView /></AdminLayout>} />
+                      <Route path="/admin/payments" element={<AdminLayout><AdminInbox /></AdminLayout>} />
+                      
+                    </Routes>
+
+                    <DevTools />
+                  </HashRouter>
+              </AuthProvider>
+            </PublishingProvider>
         </VaultProvider>
       </MessageProvider>
     </OrderProvider>

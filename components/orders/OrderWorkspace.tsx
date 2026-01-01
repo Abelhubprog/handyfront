@@ -16,7 +16,7 @@ const formatTime = (date: Date | string) => {
     return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 };
 
-export const OrderWorkspace = ({ order, userType = 'user', onPayment }: { order: Order, userType?: 'user' | 'admin', onPayment: () => void }) => {
+export const OrderWorkspace: React.FC<{ order: Order, userType?: 'user' | 'admin', onPayment: () => void }> = ({ order, userType = 'user', onPayment }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'messages' | 'files' | 'payment' | 'notes'>('overview');
   const [isStatusOpen, setIsStatusOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);

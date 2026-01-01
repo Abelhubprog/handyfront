@@ -30,7 +30,7 @@ interface MessageContextType {
 
 const MessageContext = createContext<MessageContextType | undefined>(undefined);
 
-export const MessageProvider = ({ children }: { children: ReactNode }) => {
+export const MessageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { orders, updateOrder } = useOrders();
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [messages, setMessages] = useState<Record<string, Message[]>>({});

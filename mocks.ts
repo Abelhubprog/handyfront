@@ -2,15 +2,73 @@
 import { Order, User } from './types';
 
 export const MOCK_USERS: User[] = [
-    { id: 'u1', name: 'Alex Student', email: 'alex@uni.edu', role: 'user' },
-    { id: 'a1', name: 'Admin Sarah', email: 'sarah@handywriterz.com', role: 'admin' },
-    { id: 'w1', name: 'Writer Mike', email: 'mike@handywriterz.com', role: 'writer' },
-    { id: 's1', name: 'Support Jay', email: 'jay@handywriterz.com', role: 'support' },
+    { 
+        id: 'u1', 
+        name: 'Alex Student', 
+        email: 'alex@uni.edu', 
+        role: 'user', 
+        status: 'active',
+        joinedAt: '2023-09-01',
+        lastActive: '2 mins ago',
+        stats: { totalOrders: 5, totalSpent: 1250, totalEarned: 0, rating: 5.0 }
+    },
+    { 
+        id: 'a1', 
+        name: 'Sarah Jenkins', 
+        email: 'sarah@handywriterz.com', 
+        role: 'admin', 
+        status: 'active',
+        joinedAt: '2023-01-15',
+        lastActive: 'Just now',
+        stats: { totalOrders: 0, totalSpent: 0, totalEarned: 0, rating: 0 }
+    },
+    { 
+        id: 'w1', 
+        name: 'Dr. Michael Chen', 
+        email: 'mike@handywriterz.com', 
+        role: 'writer', 
+        status: 'active',
+        joinedAt: '2023-03-10',
+        lastActive: '1 hour ago',
+        stats: { totalOrders: 42, totalSpent: 0, totalEarned: 15400, rating: 4.9 }
+    },
+    { 
+        id: 's1', 
+        name: 'Jay Support', 
+        email: 'jay@handywriterz.com', 
+        role: 'support', 
+        status: 'active',
+        joinedAt: '2023-05-20',
+        lastActive: '5 mins ago',
+        stats: { totalOrders: 0, totalSpent: 0, totalEarned: 0, rating: 0 }
+    },
+    { 
+        id: 'u2', 
+        name: 'Emma Watson', 
+        email: 'emma.w@college.edu', 
+        role: 'user', 
+        status: 'pending',
+        joinedAt: '2023-10-25',
+        lastActive: '2 days ago',
+        stats: { totalOrders: 1, totalSpent: 120, totalEarned: 0, rating: 0 }
+    },
+    { 
+        id: 'w2', 
+        name: 'Prof. David Miller', 
+        email: 'david.m@handywriterz.com', 
+        role: 'writer', 
+        status: 'suspended',
+        joinedAt: '2023-04-01',
+        lastActive: '1 week ago',
+        stats: { totalOrders: 15, totalSpent: 0, totalEarned: 4500, rating: 3.8 }
+    },
 ];
 
 export const INITIAL_ORDERS: Order[] = [
   {
     id: 'ORD-2491',
+    userId: 'u1',
+    writerId: 'w1',
     title: 'Economics Thesis: Market Dynamics',
     service: 'Dissertation',
     status: 'in_progress',
@@ -26,6 +84,7 @@ export const INITIAL_ORDERS: Order[] = [
   },
   {
     id: 'ORD-2492',
+    userId: 'u1',
     title: 'History Essay: Industrial Revolution',
     service: 'Essay Writing',
     status: 'pending_payment',
@@ -39,6 +98,8 @@ export const INITIAL_ORDERS: Order[] = [
   },
   {
     id: 'ORD-2493',
+    userId: 'u2',
+    writerId: 'w1',
     title: 'CS Lab Report: Data Structures',
     service: 'Lab Report',
     status: 'delivered',
@@ -53,6 +114,7 @@ export const INITIAL_ORDERS: Order[] = [
   },
   {
     id: 'ORD-2494',
+    userId: 'u1',
     title: 'Literature Review: Modernism',
     service: 'Research Paper',
     status: 'review',

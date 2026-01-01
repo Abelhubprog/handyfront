@@ -20,7 +20,7 @@ const formatDate = (date: Date) => {
 
 // --- Sub-Components ---
 
-const MessageSystem = ({ message }: { message: Message }) => (
+const MessageSystem: React.FC<{ message: Message }> = ({ message }) => (
     <div className="flex justify-center my-4">
         <span className="text-xs text-zinc-400 italic bg-zinc-50 px-3 py-1 rounded border border-zinc-100">
             {message.text} • {formatTime(message.timestamp)}

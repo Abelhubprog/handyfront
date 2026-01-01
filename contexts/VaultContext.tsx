@@ -22,7 +22,7 @@ interface VaultContextType {
 
 const VaultContext = createContext<VaultContextType | undefined>(undefined);
 
-export const VaultProvider = ({ children }: { children: ReactNode }) => {
+export const VaultProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { orders } = useOrders();
   const processedOrderIds = useRef<Set<string>>(new Set());
   const isInitialized = useRef(false);

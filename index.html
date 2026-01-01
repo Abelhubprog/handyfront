@@ -10,13 +10,38 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* Neutrals */
+            --bg: 0 0% 100%; /* White */
+            --surface: 0 0% 100%;
+            --surface-2: 210 40% 98%;
+            --border: 214 32% 91%;
+            --text: 222 47% 11%; /* Zinc-900 equivalent */
+            --muted: 215 16% 47%; /* Zinc-500 equivalent */
+
+            /* Brand (Primary) - Domain Themeable */
+            --primary: 222 89% 55%; /* Blue-600ish */
+            --primary-fg: 0 0% 100%;
+
+            /* Semantic */
+            --success: 142 76% 36%;
+            --warning: 38 92% 50%;
+            --danger: 0 84% 60%;
+            --info: 199 89% 48%;
+
+            /* Radius */
+            --radius-sm: 0.5rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1rem;
+            --radius-pill: 9999px;
+            
             --font-sans: 'Inter', sans-serif;
             --font-serif: 'Playfair Display', serif;
         }
         body {
             font-family: var(--font-sans);
-            background-color: #f4f4f5; /* zinc-100 */
-            color: #18181b; /* zinc-900 */
+            background-color: #fafafa; /* Fallback */
+            background-color: hsl(var(--surface-2)); 
+            color: hsl(var(--text));
         }
         .font-serif {
             font-family: var(--font-serif);
@@ -46,6 +71,21 @@
                         serif: ['Playfair Display', 'serif'],
                     },
                     colors: {
+                        background: "hsl(var(--bg))",
+                        surface: "hsl(var(--surface))",
+                        surface2: "hsl(var(--surface-2))",
+                        border: "hsl(var(--border))",
+                        text: "hsl(var(--text))",
+                        muted: "hsl(var(--muted))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-fg))",
+                        },
+                        success: "hsl(var(--success))",
+                        warning: "hsl(var(--warning))",
+                        danger: "hsl(var(--danger))",
+                        info: "hsl(var(--info))",
+                        // Preserve zinc for existing pages that rely on it
                         zinc: {
                             50: '#fafafa',
                             100: '#f4f4f5',
@@ -64,6 +104,14 @@
                         'xl': '0.75rem',
                         '2xl': '1rem', // 16px
                         '3xl': '1.5rem',
+                        lg: "var(--radius-lg)",
+                        md: "var(--radius-md)",
+                        sm: "var(--radius-sm)",
+                        pill: "var(--radius-pill)",
+                    },
+                    boxShadow: {
+                        1: "0px 1px 2px rgba(0,0,0,0.06)",
+                        2: "0px 10px 30px rgba(0,0,0,0.10)",
                     }
                 }
             }

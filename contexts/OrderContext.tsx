@@ -11,7 +11,7 @@ interface OrderContextType {
 
 const OrderContext = createContext<OrderContextType | undefined>(undefined);
 
-export const OrderProvider = ({ children }: { children: ReactNode }) => {
+export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [orders, setOrders] = useState<Order[]>(INITIAL_ORDERS);
 
   const addOrder = (order: Order) => {
